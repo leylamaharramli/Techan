@@ -23,7 +23,7 @@ namespace Techan.Areas.Admin.Controllers
                 {
                     BigTitle = item.BigTitle,
                     Id = item.Id,
-                    ImageUrl = item.ImageUrl,
+                    ImagePath = item.ImagePath,
                     Link = item.Link,
                     LittleTitle = item.LittleTitle,
                     Offer = item.Offer,
@@ -42,20 +42,28 @@ namespace Techan.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            Slider slider = new();
-            slider.LittleTitle = model.LittleTitle;
-            slider.Title = model.Title;
-            slider.BigTitle = model.BigTitle;
-            slider.Offer = model.Offer;
-            slider.Link = model.Link;
-            slider.ImageUrl = model.ImageUrl;
-
+            string NewName = Path.GetRandomFileName() + Path.GetExtension(model.Image!.FileName);
+            string path = Path.Combine("imgs", "sliders", NewName);
+            await using (FileStream fs = System.IO.File.Create(NewName))
+            {
+                await model.Image.CopyToAsync(fs);
+            }
+            Slider slider = new()
+            {
+                BigTitle = model.BigTitle,
+                ImagePath = NewName,
+                Link = model.Link,
+                LittleTitle = model.LittleTitle,
+                Offer = model.Offer,
+                Title = model.Title
+            };
             await _context.Sliders.AddAsync(slider);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!id.HasValue || id.Value < 1) return BadRequest();
             int result = await _context.Sliders.Where(x => x.Id == id).ExecuteDeleteAsync();
             if (result == 0)
                 return NotFound();
@@ -72,7 +80,7 @@ namespace Techan.Areas.Admin.Controllers
                 BigTitle = x.BigTitle,
                 Offer = x.Offer,
                 Link = x.Link,
-                ImageUrl = x.ImageUrl,
+                Image = x.Image,
                 LittleTitle = x.LittleTitle,
             }).FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null) return NotFound();
@@ -90,9 +98,19 @@ namespace Techan.Areas.Admin.Controllers
             entity.BigTitle = vm.BigTitle;
             entity.Offer = vm.Offer;
             entity.Link = vm.Link;
-            entity.ImageUrl = vm.ImageUrl;
             entity.LittleTitle = vm.LittleTitle;
             entity.Title = vm.Title;
+            if (vm.ImagePath != null && vm.ImagePath.Length > 0)
+            {
+                string newFileName = Path.GetRandomFileName() + Path.GetExtension(vm.Image!.FileName);
+                string newpath = Path.Combine("imgs", "sliders", newFileName);
+                await using (FileStream fs = System.IO.File.Create(newFileName))
+                {
+                    await vm.Image.CopyToAsync(fs);
+                }
+                entity.ImagePath = newFileName;
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

@@ -1,4 +1,4 @@
-﻿@model SliderCreateVM
+﻿@model SliderUpdateVM
 <section class="content-main">
 	<div class="content-header">
 		<h2 class="content-title">Add New Slider</h2>
@@ -9,9 +9,10 @@
 	<div class="card mb-4">
 		<form method="post" class="card-body">
 			<div class="mb-4">
-				<label asp-for="ImageUrl" class="form-label"></label>
-				<input asp-for="ImageUrl" class="form-control">
-				<span class="text-sm text-danger" asp-validation-for="ImageUrl"></span>
+				<img src="@Model.ImagePath" width="60" />
+				<label asp-for="ImagePath" class="form-label"></label>
+				<input asp-for="ImagePath" class="form-control">
+				<span class="text-sm text-danger" asp-validation-for="ImagePath"></span>
 			</div>
 			<div class="row gx-3">
 				<div class="col-md-4  mb-3">
