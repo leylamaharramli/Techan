@@ -1,4 +1,6 @@
-﻿namespace Techan.ViewModels.Sliders
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Techan.ViewModels.Sliders
 {
     public class SliderUpdateVM
     {
@@ -9,6 +11,7 @@
         public string BigTitle { get; set; }
         public string Offer { get; set; }
         public string Link { get; set; }
+        [NotMapped]
         public IFormFile? Image { get; set; }
     }
 }

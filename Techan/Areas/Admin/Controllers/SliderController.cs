@@ -4,8 +4,9 @@ using Microsoft.Identity.Client;
 using System.Reflection;
 using Techan.DataAccessLayer;
 using Techan.Models;
+using Techan.ViewModels;
+using Microsoft.DotNet.Scaffolding.Shared.Project;
 using Techan.ViewModels.Sliders;
-
 
 namespace Techan.Areas.Admin.Controllers
 {
@@ -80,7 +81,7 @@ namespace Techan.Areas.Admin.Controllers
                 BigTitle = x.BigTitle,
                 Offer = x.Offer,
                 Link = x.Link,
-                Image = x.Image,
+                ImagePath = x.ImagePath,
                 LittleTitle = x.LittleTitle,
             }).FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null) return NotFound();
@@ -91,28 +92,36 @@ namespace Techan.Areas.Admin.Controllers
         {
             if (id.HasValue && id < 1)
                 return BadRequest();
+
             if (!ModelState.IsValid)
                 return View(vm);
+
             var entity = await _context.Sliders.FirstOrDefaultAsync(x => x.Id == id);
             if (entity == null) return BadRequest();
-            entity.BigTitle = vm.BigTitle;
-            entity.Offer = vm.Offer;
-            entity.Link = vm.Link;
-            entity.LittleTitle = vm.LittleTitle;
-            entity.Title = vm.Title;
-            if (vm.ImagePath != null && vm.ImagePath.Length > 0)
+
+            if (vm.Image != null)
             {
-                string newFileName = Path.GetRandomFileName() + Path.GetExtension(vm.Image!.FileName);
-                string newpath = Path.Combine("imgs", "sliders", newFileName);
-                await using (FileStream fs = System.IO.File.Create(newFileName))
+                string newFileName = Path.GetRandomFileName() + Path.GetExtension(vm.Image.FileName);
+                string newPath = Path.Combine("wwwroot", "imgs", "sliders", newFileName);
+                await using (FileStream fs = System.IO.File.Create(newPath))
                 {
                     await vm.Image.CopyToAsync(fs);
                 }
                 entity.ImagePath = newFileName;
+            entity.BigTitle = vm.BigTitle;
+            entity.Offer = vm.Offer;
+            entity.Link = vm.Link;
+            entity.Title = vm.Title;
+            entity.LittleTitle = vm.LittleTitle;
             }
 
+
+           
+
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
-        }
+        }   
+
     }
 }
