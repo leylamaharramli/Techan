@@ -3,13 +3,19 @@ using Techan.Models;
 
 namespace Techan.DataAccessLayer
 {
-    public class TechanDbContext : DbContext
+    public class TechanDbContext: DbContext
     {
-        public DbSet<Slider> Sliders { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public TechanDbContext(DbContextOptions opt) : base(opt)
         {
-            optionsBuilder.UseSqlServer("Server=LEYLA\\SQLEXPRESS;Database=Techan;Trusted_Connection=True;TrustServerCertificate=True");
-            base.OnConfiguring(optionsBuilder);
+
         }
+        public DbSet<Slider> Sliders { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Server=LEYLA\\SQLEXPRESS;Database=Techan;Trusted_Connection=True;TrustServerCertificate=True");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
     }
 }
