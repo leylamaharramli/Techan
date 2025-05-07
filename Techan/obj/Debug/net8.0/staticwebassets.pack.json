@@ -1237,6 +1237,18 @@
       "PackagePath": "staticwebassets\\assets\\js\\vendor\\modernizr-3.6.0.min.js"
     },
     {
+      "Id": "C:\\Users\\leyla\\source\\repos\\Techan\\Techan\\wwwroot\\imgs\\brands\\hazv4z2m.xlx.png",
+      "PackagePath": "staticwebassets\\imgs\\brands\\hazv4z2m.xlx.png"
+    },
+    {
+      "Id": "C:\\Users\\leyla\\source\\repos\\Techan\\Techan\\wwwroot\\imgs\\sliders\\b5acw0n4.q1z.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\b5acw0n4.q1z.png"
+    },
+    {
+      "Id": "C:\\Users\\leyla\\source\\repos\\Techan\\Techan\\wwwroot\\imgs\\sliders\\fq2giwh2.lwd.png",
+      "PackagePath": "staticwebassets\\imgs\\sliders\\fq2giwh2.lwd.png"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Techan.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

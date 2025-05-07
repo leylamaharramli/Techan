@@ -10,7 +10,11 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\Admin\assets\fonts\material-icon\css\" />
-    <Folder Include="wwwroot\imgs\sliders\" />
+    <Folder Include="wwwroot\imgs\brands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\imgs\sliders\b5acw0n4.q1z.png" />
   </ItemGroup>
 
   <ItemGroup>

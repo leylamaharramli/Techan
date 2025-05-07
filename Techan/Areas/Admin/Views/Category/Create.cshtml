@@ -1,0 +1,23 @@
+﻿@using Techan.ViewModels.Category
+@model CategoryCreateVM
+<section class="content-main">
+	<div class="content-header">
+		<h2 class="content-title">Add New Category</h2>
+		<div>
+			<a asp-action="Index" class="btn btn-md rounded font-sm hover-up">Go to brand list</a>
+		</div>
+	</div>
+	<div class="card mb-4">
+		<form method="post" class="card-body" enctype="multipart/form-data">
+
+			<div class="row gx-3">
+				<div class="col-md-4  mb-3">
+					<label asp-for="Name" class="form-label"></label>
+					<input asp-for="Name" class="form-control">
+					<span class="text-sm text-danger" asp-validation-for="Name"></span>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Create</button>
+		</form>
+	</div>
+</section>
